@@ -30,11 +30,15 @@ No painel do site: **Project configuration -> Database** (ou **Extensions ->
 Netlify DB**) e crie o Postgres. A Netlify injeta a variavel `NETLIFY_DB_URL`,
 que o app usa como `DATABASE_URL` quando essa nao existe.
 
-Se preferir um banco de fora (Neon, Supabase, Railway), e so criar la e colocar
-a string de conexao em `DATABASE_URL` nas variaveis do site.
+As tabelas sao criadas pelas migrations em `netlify/database/migrations/`,
+aplicadas pela Netlify no deploy. O script `scripts/preparar-hospedagem.mjs`
+pula `prisma db push` na Netlify: criar as tabelas durante o build entraria em
+conflito com as migrations da plataforma.
 
-As tabelas sao criadas no proprio build, por `scripts/preparar-hospedagem.mjs`
-(`prisma db push`, idempotente).
+A migration inicial aceita enums, tabelas, indices e chaves estrangeiras ja
+existentes, preservando os dados de bancos preparados anteriormente pelo
+script. Novas alteracoes do schema Prisma precisam de novas migrations SQL
+nesse diretorio; nao use `prisma db push` para atualizar o banco da Netlify.
 
 ## 3. Variaveis do site
 

@@ -260,9 +260,12 @@ venceu, marca POST SEM RESPOSTA e envia lembretes. Tudo idempotente, entao
 rodar de minuto em minuto nao duplica nada.
 
 O banco e provisionado pela propria Netlify (`NETLIFY_DB_URL`, usado como
-`DATABASE_URL` quando essa nao existe) e as tabelas sao criadas no build por
-`scripts/preparar-hospedagem.mjs`. Sem banco configurado o build nao quebra: ele
-avisa e segue, para o site existir antes das variaveis.
+`DATABASE_URL` quando essa nao existe) e as tabelas sao criadas pelas migrations
+em `netlify/database/migrations/`, aplicadas pela plataforma no deploy.
+`scripts/preparar-hospedagem.mjs` nao executa `prisma db push` na Netlify, para
+nao criar o schema antes das migrations e causar conflitos. Em outras
+hospedagens, o script continua preparando o banco; sem banco configurado, ele
+avisa e segue.
 
 Passo a passo com cliques em [docs/deploy-netlify.md](docs/deploy-netlify.md).
 

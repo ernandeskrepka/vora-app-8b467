@@ -4,9 +4,21 @@
 // as tabelas. Regras:
 // - sem banco configurado (primeiro deploy, antes de criar o Postgres): avisa
 //   e deixa o build seguir, para o site existir e as variaveis entrarem depois;
-// - banco configurado: roda `prisma db push`, que e idempotente;
+// - Netlify: as migrations da plataforma criam/atualizam as tabelas;
+// - outras hospedagens com banco configurado: roda `prisma db push`;
 // - falha de conexao nao derruba o build: o painel mostra o erro na hora do uso.
 import { spawnSync } from "node:child_process";
+
+if (
+  process.env.NETLIFY === "true" ||
+  process.env.NETLIFY_DB_URL ||
+  process.env.NETLIFY_DATABASE_URL
+) {
+  console.log(
+    "[vora] Schema gerenciado pelas migrations da Netlify; pulando prisma db push.",
+  );
+  process.exit(0);
+}
 
 const url =
   process.env.DATABASE_URL ||

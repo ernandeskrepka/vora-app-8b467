@@ -2,55 +2,151 @@
 CREATE SCHEMA IF NOT EXISTS "public";
 
 -- CreateEnum
-CREATE TYPE "UserRole" AS ENUM ('ADMIN', 'EDITOR');
+DO $$
+BEGIN
+    CREATE TYPE "UserRole" AS ENUM ('ADMIN', 'EDITOR');
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END;
+$$;
 
 -- CreateEnum
-CREATE TYPE "PostStatus" AS ENUM ('RASCUNHO', 'AGUARDANDO_APROVACAO', 'APROVADO', 'PUBLICANDO', 'PUBLICADO', 'REPROVADO', 'POST_SEM_RESPOSTA', 'FALHOU', 'CANCELADO');
+DO $$
+BEGIN
+    CREATE TYPE "PostStatus" AS ENUM ('RASCUNHO', 'AGUARDANDO_APROVACAO', 'APROVADO', 'PUBLICANDO', 'PUBLICADO', 'REPROVADO', 'POST_SEM_RESPOSTA', 'FALHOU', 'CANCELADO');
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END;
+$$;
 
 -- CreateEnum
-CREATE TYPE "PostFormat" AS ENUM ('IMAGEM_UNICA', 'CARROSSEL', 'VIDEO', 'REELS');
+DO $$
+BEGIN
+    CREATE TYPE "PostFormat" AS ENUM ('IMAGEM_UNICA', 'CARROSSEL', 'VIDEO', 'REELS');
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END;
+$$;
 
 -- CreateEnum
-CREATE TYPE "Network" AS ENUM ('INSTAGRAM', 'FACEBOOK');
+DO $$
+BEGIN
+    CREATE TYPE "Network" AS ENUM ('INSTAGRAM', 'FACEBOOK');
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END;
+$$;
 
 -- CreateEnum
-CREATE TYPE "MediaKind" AS ENUM ('IMAGEM', 'VIDEO');
+DO $$
+BEGIN
+    CREATE TYPE "MediaKind" AS ENUM ('IMAGEM', 'VIDEO');
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END;
+$$;
 
 -- CreateEnum
-CREATE TYPE "MetaAssetType" AS ENUM ('INSTAGRAM', 'FACEBOOK_PAGE', 'AD_ACCOUNT');
+DO $$
+BEGIN
+    CREATE TYPE "MetaAssetType" AS ENUM ('INSTAGRAM', 'FACEBOOK_PAGE', 'AD_ACCOUNT');
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END;
+$$;
 
 -- CreateEnum
-CREATE TYPE "MetaAuthMode" AS ENUM ('SYSTEM_USER', 'OAUTH');
+DO $$
+BEGIN
+    CREATE TYPE "MetaAuthMode" AS ENUM ('SYSTEM_USER', 'OAUTH');
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END;
+$$;
 
 -- CreateEnum
-CREATE TYPE "MetaConnectionStatus" AS ENUM ('CONECTADO', 'EXPIRADO', 'SEM_PERMISSAO', 'REVOGADO', 'NAO_CONFIGURADO');
+DO $$
+BEGIN
+    CREATE TYPE "MetaConnectionStatus" AS ENUM ('CONECTADO', 'EXPIRADO', 'SEM_PERMISSAO', 'REVOGADO', 'NAO_CONFIGURADO');
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END;
+$$;
 
 -- CreateEnum
-CREATE TYPE "ApprovalRequestStatus" AS ENUM ('PENDENTE', 'DECIDIDO', 'EXPIRADO', 'SUBSTITUIDO');
+DO $$
+BEGIN
+    CREATE TYPE "ApprovalRequestStatus" AS ENUM ('PENDENTE', 'DECIDIDO', 'EXPIRADO', 'SUBSTITUIDO');
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END;
+$$;
 
 -- CreateEnum
-CREATE TYPE "ApprovalDecisionType" AS ENUM ('APROVADO', 'REPROVADO');
+DO $$
+BEGIN
+    CREATE TYPE "ApprovalDecisionType" AS ENUM ('APROVADO', 'REPROVADO');
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END;
+$$;
 
 -- CreateEnum
-CREATE TYPE "PublishAttemptStatus" AS ENUM ('SUCESSO', 'ERRO');
+DO $$
+BEGIN
+    CREATE TYPE "PublishAttemptStatus" AS ENUM ('SUCESSO', 'ERRO');
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END;
+$$;
 
 -- CreateEnum
-CREATE TYPE "NotificationChannel" AS ENUM ('WHATSAPP', 'SLACK', 'EMAIL', 'LOG');
+DO $$
+BEGIN
+    CREATE TYPE "NotificationChannel" AS ENUM ('WHATSAPP', 'SLACK', 'EMAIL', 'LOG');
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END;
+$$;
 
 -- CreateEnum
-CREATE TYPE "NotificationStatus" AS ENUM ('NA_FILA', 'ENVIADO', 'ENTREGUE', 'LIDO', 'FALHOU');
+DO $$
+BEGIN
+    CREATE TYPE "NotificationStatus" AS ENUM ('NA_FILA', 'ENVIADO', 'ENTREGUE', 'LIDO', 'FALHOU');
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END;
+$$;
 
 -- CreateEnum
-CREATE TYPE "PlanningStatus" AS ENUM ('IDEIA', 'EM_PRODUCAO', 'PRONTO', 'VIROU_POST', 'ARQUIVADO');
+DO $$
+BEGIN
+    CREATE TYPE "PlanningStatus" AS ENUM ('IDEIA', 'EM_PRODUCAO', 'PRONTO', 'VIROU_POST', 'ARQUIVADO');
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END;
+$$;
 
 -- CreateEnum
-CREATE TYPE "AssetKind" AS ENUM ('IMAGEM', 'VIDEO', 'DOCUMENTO');
+DO $$
+BEGIN
+    CREATE TYPE "AssetKind" AS ENUM ('IMAGEM', 'VIDEO', 'DOCUMENTO');
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END;
+$$;
 
 -- CreateEnum
-CREATE TYPE "ActorType" AS ENUM ('USUARIO', 'CLIENTE', 'SISTEMA');
+DO $$
+BEGIN
+    CREATE TYPE "ActorType" AS ENUM ('USUARIO', 'CLIENTE', 'SISTEMA');
+EXCEPTION
+    WHEN duplicate_object THEN NULL;
+END;
+$$;
 
 -- CreateTable
-CREATE TABLE "User" (
+CREATE TABLE IF NOT EXISTS "User" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "email" TEXT NOT NULL,
@@ -65,7 +161,7 @@ CREATE TABLE "User" (
 );
 
 -- CreateTable
-CREATE TABLE "Session" (
+CREATE TABLE IF NOT EXISTS "Session" (
     "id" TEXT NOT NULL,
     "userId" TEXT NOT NULL,
     "tokenHash" TEXT NOT NULL,
@@ -78,7 +174,7 @@ CREATE TABLE "Session" (
 );
 
 -- CreateTable
-CREATE TABLE "Client" (
+CREATE TABLE IF NOT EXISTS "Client" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "slug" TEXT NOT NULL,
@@ -92,7 +188,7 @@ CREATE TABLE "Client" (
 );
 
 -- CreateTable
-CREATE TABLE "ClientContact" (
+CREATE TABLE IF NOT EXISTS "ClientContact" (
     "id" TEXT NOT NULL,
     "clientId" TEXT NOT NULL,
     "name" TEXT NOT NULL,
@@ -107,7 +203,7 @@ CREATE TABLE "ClientContact" (
 );
 
 -- CreateTable
-CREATE TABLE "MetaConnection" (
+CREATE TABLE IF NOT EXISTS "MetaConnection" (
     "id" TEXT NOT NULL,
     "clientId" TEXT NOT NULL,
     "assetType" "MetaAssetType" NOT NULL,
@@ -127,7 +223,7 @@ CREATE TABLE "MetaConnection" (
 );
 
 -- CreateTable
-CREATE TABLE "PlanningItem" (
+CREATE TABLE IF NOT EXISTS "PlanningItem" (
     "id" TEXT NOT NULL,
     "clientId" TEXT NOT NULL,
     "title" TEXT NOT NULL,
@@ -143,7 +239,7 @@ CREATE TABLE "PlanningItem" (
 );
 
 -- CreateTable
-CREATE TABLE "ClientAsset" (
+CREATE TABLE IF NOT EXISTS "ClientAsset" (
     "id" TEXT NOT NULL,
     "clientId" TEXT NOT NULL,
     "kind" "AssetKind" NOT NULL,
@@ -162,7 +258,7 @@ CREATE TABLE "ClientAsset" (
 );
 
 -- CreateTable
-CREATE TABLE "Post" (
+CREATE TABLE IF NOT EXISTS "Post" (
     "id" TEXT NOT NULL,
     "clientId" TEXT NOT NULL,
     "createdById" TEXT,
@@ -183,7 +279,7 @@ CREATE TABLE "Post" (
 );
 
 -- CreateTable
-CREATE TABLE "PostMedia" (
+CREATE TABLE IF NOT EXISTS "PostMedia" (
     "id" TEXT NOT NULL,
     "postId" TEXT NOT NULL,
     "position" INTEGER NOT NULL,
@@ -201,7 +297,7 @@ CREATE TABLE "PostMedia" (
 );
 
 -- CreateTable
-CREATE TABLE "ApprovalRequest" (
+CREATE TABLE IF NOT EXISTS "ApprovalRequest" (
     "id" TEXT NOT NULL,
     "postId" TEXT NOT NULL,
     "postVersion" INTEGER NOT NULL,
@@ -218,7 +314,7 @@ CREATE TABLE "ApprovalRequest" (
 );
 
 -- CreateTable
-CREATE TABLE "ApprovalDecision" (
+CREATE TABLE IF NOT EXISTS "ApprovalDecision" (
     "id" TEXT NOT NULL,
     "approvalRequestId" TEXT NOT NULL,
     "postId" TEXT NOT NULL,
@@ -234,7 +330,7 @@ CREATE TABLE "ApprovalDecision" (
 );
 
 -- CreateTable
-CREATE TABLE "PublishAttempt" (
+CREATE TABLE IF NOT EXISTS "PublishAttempt" (
     "id" TEXT NOT NULL,
     "postId" TEXT NOT NULL,
     "network" "Network" NOT NULL,
@@ -254,7 +350,7 @@ CREATE TABLE "PublishAttempt" (
 );
 
 -- CreateTable
-CREATE TABLE "PostPublication" (
+CREATE TABLE IF NOT EXISTS "PostPublication" (
     "id" TEXT NOT NULL,
     "postId" TEXT NOT NULL,
     "network" "Network" NOT NULL,
@@ -267,7 +363,7 @@ CREATE TABLE "PostPublication" (
 );
 
 -- CreateTable
-CREATE TABLE "Notification" (
+CREATE TABLE IF NOT EXISTS "Notification" (
     "id" TEXT NOT NULL,
     "channel" "NotificationChannel" NOT NULL,
     "destination" TEXT NOT NULL,
@@ -287,7 +383,7 @@ CREATE TABLE "Notification" (
 );
 
 -- CreateTable
-CREATE TABLE "AdInsightDaily" (
+CREATE TABLE IF NOT EXISTS "AdInsightDaily" (
     "id" TEXT NOT NULL,
     "clientId" TEXT NOT NULL,
     "adAccountId" TEXT NOT NULL,
@@ -311,7 +407,7 @@ CREATE TABLE "AdInsightDaily" (
 );
 
 -- CreateTable
-CREATE TABLE "AuditLog" (
+CREATE TABLE IF NOT EXISTS "AuditLog" (
     "id" TEXT NOT NULL,
     "entityType" TEXT NOT NULL,
     "entityId" TEXT NOT NULL,
@@ -330,7 +426,7 @@ CREATE TABLE "AuditLog" (
 );
 
 -- CreateTable
-CREATE TABLE "Setting" (
+CREATE TABLE IF NOT EXISTS "Setting" (
     "key" TEXT NOT NULL,
     "value" JSONB NOT NULL,
     "updatedAt" TIMESTAMP(3) NOT NULL,
@@ -339,133 +435,293 @@ CREATE TABLE "Setting" (
 );
 
 -- CreateIndex
-CREATE UNIQUE INDEX "User_email_key" ON "User"("email");
+CREATE UNIQUE INDEX IF NOT EXISTS "User_email_key" ON "User"("email");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Session_tokenHash_key" ON "Session"("tokenHash");
+CREATE UNIQUE INDEX IF NOT EXISTS "Session_tokenHash_key" ON "Session"("tokenHash");
 
 -- CreateIndex
-CREATE INDEX "Session_userId_idx" ON "Session"("userId");
+CREATE INDEX IF NOT EXISTS "Session_userId_idx" ON "Session"("userId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "Client_slug_key" ON "Client"("slug");
+CREATE UNIQUE INDEX IF NOT EXISTS "Client_slug_key" ON "Client"("slug");
 
 -- CreateIndex
-CREATE INDEX "ClientContact_clientId_idx" ON "ClientContact"("clientId");
+CREATE INDEX IF NOT EXISTS "ClientContact_clientId_idx" ON "ClientContact"("clientId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "ClientContact_clientId_phoneE164_key" ON "ClientContact"("clientId", "phoneE164");
+CREATE UNIQUE INDEX IF NOT EXISTS "ClientContact_clientId_phoneE164_key" ON "ClientContact"("clientId", "phoneE164");
 
 -- CreateIndex
-CREATE INDEX "MetaConnection_status_idx" ON "MetaConnection"("status");
+CREATE INDEX IF NOT EXISTS "MetaConnection_status_idx" ON "MetaConnection"("status");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "MetaConnection_clientId_assetType_key" ON "MetaConnection"("clientId", "assetType");
+CREATE UNIQUE INDEX IF NOT EXISTS "MetaConnection_clientId_assetType_key" ON "MetaConnection"("clientId", "assetType");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "PlanningItem_postId_key" ON "PlanningItem"("postId");
+CREATE UNIQUE INDEX IF NOT EXISTS "PlanningItem_postId_key" ON "PlanningItem"("postId");
 
 -- CreateIndex
-CREATE INDEX "PlanningItem_clientId_status_idx" ON "PlanningItem"("clientId", "status");
+CREATE INDEX IF NOT EXISTS "PlanningItem_clientId_status_idx" ON "PlanningItem"("clientId", "status");
 
 -- CreateIndex
-CREATE INDEX "ClientAsset_clientId_createdAt_idx" ON "ClientAsset"("clientId", "createdAt");
+CREATE INDEX IF NOT EXISTS "ClientAsset_clientId_createdAt_idx" ON "ClientAsset"("clientId", "createdAt");
 
 -- CreateIndex
-CREATE INDEX "Post_clientId_scheduledAt_idx" ON "Post"("clientId", "scheduledAt");
+CREATE INDEX IF NOT EXISTS "Post_clientId_scheduledAt_idx" ON "Post"("clientId", "scheduledAt");
 
 -- CreateIndex
-CREATE INDEX "Post_status_scheduledAt_idx" ON "Post"("status", "scheduledAt");
+CREATE INDEX IF NOT EXISTS "Post_status_scheduledAt_idx" ON "Post"("status", "scheduledAt");
 
 -- CreateIndex
-CREATE INDEX "PostMedia_postId_idx" ON "PostMedia"("postId");
+CREATE INDEX IF NOT EXISTS "PostMedia_postId_idx" ON "PostMedia"("postId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "PostMedia_postId_position_key" ON "PostMedia"("postId", "position");
+CREATE UNIQUE INDEX IF NOT EXISTS "PostMedia_postId_position_key" ON "PostMedia"("postId", "position");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "ApprovalRequest_tokenHash_key" ON "ApprovalRequest"("tokenHash");
+CREATE UNIQUE INDEX IF NOT EXISTS "ApprovalRequest_tokenHash_key" ON "ApprovalRequest"("tokenHash");
 
 -- CreateIndex
-CREATE INDEX "ApprovalRequest_postId_postVersion_idx" ON "ApprovalRequest"("postId", "postVersion");
+CREATE INDEX IF NOT EXISTS "ApprovalRequest_postId_postVersion_idx" ON "ApprovalRequest"("postId", "postVersion");
 
 -- CreateIndex
-CREATE INDEX "ApprovalRequest_status_idx" ON "ApprovalRequest"("status");
+CREATE INDEX IF NOT EXISTS "ApprovalRequest_status_idx" ON "ApprovalRequest"("status");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "ApprovalDecision_approvalRequestId_key" ON "ApprovalDecision"("approvalRequestId");
+CREATE UNIQUE INDEX IF NOT EXISTS "ApprovalDecision_approvalRequestId_key" ON "ApprovalDecision"("approvalRequestId");
 
 -- CreateIndex
-CREATE INDEX "ApprovalDecision_postId_idx" ON "ApprovalDecision"("postId");
+CREATE INDEX IF NOT EXISTS "ApprovalDecision_postId_idx" ON "ApprovalDecision"("postId");
 
 -- CreateIndex
-CREATE INDEX "PublishAttempt_postId_idx" ON "PublishAttempt"("postId");
+CREATE INDEX IF NOT EXISTS "PublishAttempt_postId_idx" ON "PublishAttempt"("postId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "PublishAttempt_postId_network_attempt_key" ON "PublishAttempt"("postId", "network", "attempt");
+CREATE UNIQUE INDEX IF NOT EXISTS "PublishAttempt_postId_network_attempt_key" ON "PublishAttempt"("postId", "network", "attempt");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "PostPublication_postId_network_key" ON "PostPublication"("postId", "network");
+CREATE UNIQUE INDEX IF NOT EXISTS "PostPublication_postId_network_key" ON "PostPublication"("postId", "network");
 
 -- CreateIndex
-CREATE INDEX "Notification_postId_idx" ON "Notification"("postId");
+CREATE INDEX IF NOT EXISTS "Notification_postId_idx" ON "Notification"("postId");
 
 -- CreateIndex
-CREATE INDEX "Notification_providerMessageId_idx" ON "Notification"("providerMessageId");
+CREATE INDEX IF NOT EXISTS "Notification_providerMessageId_idx" ON "Notification"("providerMessageId");
 
 -- CreateIndex
-CREATE INDEX "AdInsightDaily_clientId_date_idx" ON "AdInsightDaily"("clientId", "date");
+CREATE INDEX IF NOT EXISTS "AdInsightDaily_clientId_date_idx" ON "AdInsightDaily"("clientId", "date");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "AdInsightDaily_clientId_campaignId_date_key" ON "AdInsightDaily"("clientId", "campaignId", "date");
+CREATE UNIQUE INDEX IF NOT EXISTS "AdInsightDaily_clientId_campaignId_date_key" ON "AdInsightDaily"("clientId", "campaignId", "date");
 
 -- CreateIndex
-CREATE INDEX "AuditLog_entityType_entityId_createdAt_idx" ON "AuditLog"("entityType", "entityId", "createdAt");
+CREATE INDEX IF NOT EXISTS "AuditLog_entityType_entityId_createdAt_idx" ON "AuditLog"("entityType", "entityId", "createdAt");
 
 -- AddForeignKey
-ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conname = 'Session_userId_fkey'
+          AND conrelid = '"Session"'::regclass
+    ) THEN
+        ALTER TABLE "Session" ADD CONSTRAINT "Session_userId_fkey" FOREIGN KEY ("userId") REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+END;
+$$;
 
 -- AddForeignKey
-ALTER TABLE "ClientContact" ADD CONSTRAINT "ClientContact_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conname = 'ClientContact_clientId_fkey'
+          AND conrelid = '"ClientContact"'::regclass
+    ) THEN
+        ALTER TABLE "ClientContact" ADD CONSTRAINT "ClientContact_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+END;
+$$;
 
 -- AddForeignKey
-ALTER TABLE "MetaConnection" ADD CONSTRAINT "MetaConnection_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conname = 'MetaConnection_clientId_fkey'
+          AND conrelid = '"MetaConnection"'::regclass
+    ) THEN
+        ALTER TABLE "MetaConnection" ADD CONSTRAINT "MetaConnection_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+END;
+$$;
 
 -- AddForeignKey
-ALTER TABLE "PlanningItem" ADD CONSTRAINT "PlanningItem_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conname = 'PlanningItem_clientId_fkey'
+          AND conrelid = '"PlanningItem"'::regclass
+    ) THEN
+        ALTER TABLE "PlanningItem" ADD CONSTRAINT "PlanningItem_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+END;
+$$;
 
 -- AddForeignKey
-ALTER TABLE "PlanningItem" ADD CONSTRAINT "PlanningItem_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conname = 'PlanningItem_postId_fkey'
+          AND conrelid = '"PlanningItem"'::regclass
+    ) THEN
+        ALTER TABLE "PlanningItem" ADD CONSTRAINT "PlanningItem_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+    END IF;
+END;
+$$;
 
 -- AddForeignKey
-ALTER TABLE "ClientAsset" ADD CONSTRAINT "ClientAsset_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conname = 'ClientAsset_clientId_fkey'
+          AND conrelid = '"ClientAsset"'::regclass
+    ) THEN
+        ALTER TABLE "ClientAsset" ADD CONSTRAINT "ClientAsset_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+END;
+$$;
 
 -- AddForeignKey
-ALTER TABLE "Post" ADD CONSTRAINT "Post_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conname = 'Post_clientId_fkey'
+          AND conrelid = '"Post"'::regclass
+    ) THEN
+        ALTER TABLE "Post" ADD CONSTRAINT "Post_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+END;
+$$;
 
 -- AddForeignKey
-ALTER TABLE "Post" ADD CONSTRAINT "Post_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conname = 'Post_createdById_fkey'
+          AND conrelid = '"Post"'::regclass
+    ) THEN
+        ALTER TABLE "Post" ADD CONSTRAINT "Post_createdById_fkey" FOREIGN KEY ("createdById") REFERENCES "User"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+    END IF;
+END;
+$$;
 
 -- AddForeignKey
-ALTER TABLE "PostMedia" ADD CONSTRAINT "PostMedia_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conname = 'PostMedia_postId_fkey'
+          AND conrelid = '"PostMedia"'::regclass
+    ) THEN
+        ALTER TABLE "PostMedia" ADD CONSTRAINT "PostMedia_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+END;
+$$;
 
 -- AddForeignKey
-ALTER TABLE "ApprovalRequest" ADD CONSTRAINT "ApprovalRequest_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conname = 'ApprovalRequest_postId_fkey'
+          AND conrelid = '"ApprovalRequest"'::regclass
+    ) THEN
+        ALTER TABLE "ApprovalRequest" ADD CONSTRAINT "ApprovalRequest_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+END;
+$$;
 
 -- AddForeignKey
-ALTER TABLE "ApprovalDecision" ADD CONSTRAINT "ApprovalDecision_approvalRequestId_fkey" FOREIGN KEY ("approvalRequestId") REFERENCES "ApprovalRequest"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conname = 'ApprovalDecision_approvalRequestId_fkey'
+          AND conrelid = '"ApprovalDecision"'::regclass
+    ) THEN
+        ALTER TABLE "ApprovalDecision" ADD CONSTRAINT "ApprovalDecision_approvalRequestId_fkey" FOREIGN KEY ("approvalRequestId") REFERENCES "ApprovalRequest"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+END;
+$$;
 
 -- AddForeignKey
-ALTER TABLE "ApprovalDecision" ADD CONSTRAINT "ApprovalDecision_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conname = 'ApprovalDecision_postId_fkey'
+          AND conrelid = '"ApprovalDecision"'::regclass
+    ) THEN
+        ALTER TABLE "ApprovalDecision" ADD CONSTRAINT "ApprovalDecision_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+END;
+$$;
 
 -- AddForeignKey
-ALTER TABLE "PublishAttempt" ADD CONSTRAINT "PublishAttempt_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conname = 'PublishAttempt_postId_fkey'
+          AND conrelid = '"PublishAttempt"'::regclass
+    ) THEN
+        ALTER TABLE "PublishAttempt" ADD CONSTRAINT "PublishAttempt_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+END;
+$$;
 
 -- AddForeignKey
-ALTER TABLE "PostPublication" ADD CONSTRAINT "PostPublication_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conname = 'PostPublication_postId_fkey'
+          AND conrelid = '"PostPublication"'::regclass
+    ) THEN
+        ALTER TABLE "PostPublication" ADD CONSTRAINT "PostPublication_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+END;
+$$;
 
 -- AddForeignKey
-ALTER TABLE "Notification" ADD CONSTRAINT "Notification_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conname = 'Notification_postId_fkey'
+          AND conrelid = '"Notification"'::regclass
+    ) THEN
+        ALTER TABLE "Notification" ADD CONSTRAINT "Notification_postId_fkey" FOREIGN KEY ("postId") REFERENCES "Post"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+    END IF;
+END;
+$$;
 
 -- AddForeignKey
-ALTER TABLE "AdInsightDaily" ADD CONSTRAINT "AdInsightDaily_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+DO $$
+BEGIN
+    IF NOT EXISTS (
+        SELECT 1 FROM pg_constraint
+        WHERE conname = 'AdInsightDaily_clientId_fkey'
+          AND conrelid = '"AdInsightDaily"'::regclass
+    ) THEN
+        ALTER TABLE "AdInsightDaily" ADD CONSTRAINT "AdInsightDaily_clientId_fkey" FOREIGN KEY ("clientId") REFERENCES "Client"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+    END IF;
+END;
+$$;
